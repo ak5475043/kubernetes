@@ -91,7 +91,7 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: my-autoscaler
+  name: my-hpa
   namespace: my-namespace
   labels:
     app: my-app
@@ -103,3 +103,22 @@ spec:
   minReplicas: 2
   maxReplicas: 10
   targetCPUUtilizationPercentage: 20
+
+
+---
+
+
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: my-vpa
+  namespace: my-namespace
+  labels:
+    app: my-app
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: my-deployment
+  updatePolicy:
+    updateMode: "Off"
