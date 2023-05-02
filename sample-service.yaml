@@ -55,13 +55,20 @@ spec:
         image: ayush2107/nginx:2.0
         ports:
         - containerPort: 80
+        volumeMounts:
+        - mountPath: /tmp/demo 
+          name: demo-volume 
+
         resources:
           limits:
             cpu: 100m
           requests:
             cpu: 100m
-
-
+        
+      volumes:
+      - name: demo-volume
+        hostPath: 
+          path: /tmp/data
 ---
 
 
@@ -88,21 +95,21 @@ spec:
 ---
 
 
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: my-hpa
-  namespace: my-namespace
-  labels:
-    app: my-app
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: my-deployment
-  minReplicas: 2
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 20
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: my-hpa
+#   namespace: my-namespace
+#   labels:
+#     app: my-app
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: my-deployment
+#   minReplicas: 2
+#   maxReplicas: 10
+#   targetCPUUtilizationPercentage: 20
 
 
 ---
