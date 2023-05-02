@@ -1,0 +1,90 @@
+# apiVersion: apps/v1
+# kind: Pod
+# metadata: 
+#   name: myvolume
+#   namespace: my-namespace
+#   labels: 
+#     app: myapp
+# spec:
+#   containers:
+#   - name: c01
+#     image: ubuntu
+#     volumeMounts:
+#     - name: xchange
+#       mountPath: /tmp/hostpath
+#   volumes:
+#   - name: xchange
+#     hostPath:
+#       path: /tmp/data
+
+
+
+# apiVersion: v1
+# kind: Pod 
+# metadata:
+#   name: myboot-demo
+# spec:
+#   containers:
+#   - name: myboot-demo
+#     image: quay.io/rhdevelopers/myboot:v4
+
+#     volumeMounts:
+#     - mountPath: /tmp/demo 
+#       name: demo-volume 
+
+#   volumes:
+#   - name: demo-volume
+#     emptyDir: {}
+
+
+
+
+
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: myboot-demo
+# spec:
+#   containers:
+#   - name: myboot-demo-1 
+#     image: quay.io/rhdevelopers/myboot:v4
+#     volumeMounts:
+#     - mountPath: /tmp/demo
+#       name: demo-volume
+
+#   - name: myboot-demo-2 
+#     image: quay.io/rhdevelopers/myboot:v4 
+
+#     env:
+#     - name: SERVER_PORT 
+#       value: "8090"
+
+#     volumeMounts:
+#     - mountPath: /tmp/demo
+#       name: demo-volume
+
+#   volumes:
+#   - name: demo-volume 
+#     emptyDir: {}
+
+
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myboot-demo
+spec:
+  containers:
+  - name: myboot-demo
+    image: quay.io/rhdevelopers/myboot:v4
+
+    volumeMounts:
+    - mountPath: /tmp/demo
+      name: demo-volume
+
+  volumes:
+  - name: demo-volume
+    hostPath: 
+      path: "/mnt/data"
