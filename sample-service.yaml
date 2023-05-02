@@ -55,6 +55,9 @@ spec:
         image: ayush2107/nginx:2.0
         ports:
         - containerPort: 80
+        env:
+        - name: SERVER_PORT 
+          value: "8090"
         volumeMounts:
         - mountPath: /tmp/demo 
           name: demo-volume 
