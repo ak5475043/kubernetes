@@ -1,0 +1,61 @@
+# apiVersion: batch/v1
+# kind: Job
+# metadata: 
+#   name: testjob
+# spec: 
+#   parallelism: 5
+#   activeDeadlineSeconds: 10
+#   template:
+#     metadata:
+#       name: testjob
+#     spec:
+#       containers:
+#       - name: counter
+#         image: ubuntu
+#         command: ["bin/bash","-c","echo hello-world; sleep 30"]
+#       restartPolicy: Never
+
+
+
+
+# apiVersion: batch/v1
+# kind: CronJob
+# metadata:
+#   name: testjob
+# spec:
+#   schedule: "* * * * *"
+#   jobTemplate: 
+#     spec:
+#       template:
+#         spec:
+#           containers:
+#           - name: counter
+#             image: ubuntu
+#             command: ["bin/bash","-c","echo hello-world; sleep 5"]
+#           restartPolicy: Never
+
+
+
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: initcontainers
+spec:
+  initContainers:
+  - name: c1
+    image: centos
+    command: ["/bin/sh", "-c", "echo hello world > /tmp/xchange/test; sleep 30"]
+    volumeMounts:
+    - name: xchange
+      mountPath: "/tmp/xchange"
+  containers:
+  - name: c2
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo cat /tmp/data/test; sleep 5; done"]
+    volumeMounts:
+    - name: xchange
+      mountPath: "/tmp/data"
+  volumes:
+  - name: xchange
+    emptyDir: {}
